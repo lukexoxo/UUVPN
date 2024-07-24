@@ -58,9 +58,10 @@ class ServerEntity {
         name: json["name"] ?? "",
         rate: json["rate"],
         host: json["host"] ?? "",
-        port: int.parse(json["port"] ?? "0"),
-        serverPort:
-            int.parse(json["server_port"] ?? "0"), //json["server_port"],
+        // port: int.parse(json["port"] ?? "0"),
+        port: json["port"],
+        // serverPort: int.parse(json["server_port"] ?? "0"),
+        serverPort: json["server_port"],
         cipher: json["cipher"] ?? "",
         show: json["show"] ?? 0,
         sort: json["sort"] ?? 0,

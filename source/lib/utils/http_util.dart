@@ -12,16 +12,16 @@ class HttpUtil {
 
   HttpUtil() {
     BaseOptions options = BaseOptions(
-      connectTimeout: Duration(seconds: 10000),
-      receiveTimeout: Duration(seconds: 10000),
+      connectTimeout: const Duration(seconds: 10000),
+      receiveTimeout: const Duration(seconds: 10000),
     );
     dio = Dio(options);
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
-      //print("========================请求数据===================");
-      //print("url=${options.uri.toString()}");
-      //print("headers=${options.headers}");
-      //print("params=${options.data}");
+      print("========================请求数据===================");
+      print("url=${options.uri.toString()}");
+      print("headers=${options.headers}");
+      print("params=${options.data}");
 
       //如果token存在在请求参数加上token
       await SharedPreferencesUtil.getInstance()
@@ -29,7 +29,7 @@ class HttpUtil {
           .then((token) {
         if (token != null) {
           options.queryParameters[AppStrings.token] = token;
-          //print("token=$token");
+          print("token=$token");
         }
       });
 
@@ -39,14 +39,15 @@ class HttpUtil {
           .then((authData) {
         if (authData != null) {
           options.queryParameters[AppStrings.authData] = authData;
-          //print("authData=$authData");
+          print("authData=$authData");
         }
       });
 
       return handler.next(options);
     }, onResponse: (response, handler) {
-      //print("========================请求数据===================");
-      //print("code=${response.statusCode}");
+      print("========================响应数据===================");
+      print("code=${response.statusCode}");
+      print("data=${response.data}");
 
       if (response.statusCode! < 200 || response.statusCode! >= 300) {
         if (response.statusCode == 403) {
@@ -61,9 +62,9 @@ class HttpUtil {
 
       return handler.next(response);
     }, onError: (error, handler) {
-      //print("========================请求错误===================");
-      //print("message =${error.message}");
-      //print("code=${error.response?.statusCode}");
+      print("========================请求错误===================");
+      print("message =${error.message}");
+      print("code=${error.response?.statusCode}");
 
       return handler.next(error);
     }));

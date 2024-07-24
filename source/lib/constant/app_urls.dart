@@ -1,5 +1,6 @@
 class AppUrls {
-  static const String baseUrl = "https://api.0009.uk";
+  // static const String baseUrl = "https://api.0009.uk";
+  static const String baseUrl = "https://api.ad67.xyz";
   static const String baseApiUrl = '$baseUrl/api/v1'; // 基础接口地址
 
   static const String login = '$baseApiUrl/passport/auth/login';

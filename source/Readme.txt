@@ -1,0 +1,19 @@
+依赖
+- Flutter 3.7.12
+- Dart 2.19.6
+- fluro: ^2.0.3 路由组件
+- provider: ^6.0.3 状态管理
+- flutter_swiper: ^1.1.6 轮播
+- flutter_login: ^3.2.0 登录组件
+- flutter_easyrefresh: ^2.1.8
+- intl: ^0.17.0 多语言
+- crisp: ^0.3.1 Crisp客服
+- meta: ^1.7.0
+- flutter_icmp_ping: ^3.1.0 ICMP PING
+- url_launcher: ^6.1.11
+- synchronized: ^3.1.0 同步锁
+- convert: ^3.1.1
+- crypto: ^3.0.3 加密
+- get: ^4.6.5 GetX
+- google_fonts: ^5.0.0
+- sync_http: ^0.3.1 同步 HTTP 请求
