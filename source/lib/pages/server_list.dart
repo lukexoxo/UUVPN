@@ -7,7 +7,6 @@ import 'package:uuvpn/model/themeCollection.dart';
 import 'package:uuvpn/models/app_model.dart';
 import 'package:uuvpn/models/server_model.dart';
 import 'package:flutter/material.dart';
-import 'package:uuvpn/utils/common_util.dart';
 import 'package:uuvpn/utils/l10n.dart';
 
 class ServerListPage extends StatefulWidget {
@@ -232,7 +231,7 @@ class ServerListPageState extends State<ServerListPage>
                                         'assets/flags/jp.svg',
                                         height: 20,
                                       )
-                                    : SizedBox()),
+                                    : const SizedBox()),
                     const SizedBox(
                       width: 15,
                     ),
@@ -291,7 +290,7 @@ class ServerListPageState extends State<ServerListPage>
                           )),
                     ),
                     _serverModel.selectServerIndex == index
-                        ? Icon(Icons.check_circle,
+                        ? const Icon(Icons.check_circle,
                             color: Colors.green, size: 20)
                         : Container(),
                   ],

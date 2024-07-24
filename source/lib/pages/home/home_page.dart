@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:uuvpn/constant/app_colors.dart';
 import 'package:uuvpn/constant/app_dimens.dart';
 import 'package:uuvpn/model/themeCollection.dart';
 import 'package:uuvpn/models/app_model.dart';
@@ -13,22 +11,11 @@ import 'package:uuvpn/models/plan_model.dart';
 import 'package:uuvpn/models/server_model.dart';
 import 'package:uuvpn/models/user_model.dart';
 import 'package:uuvpn/models/user_subscribe_model.dart';
-import 'package:uuvpn/pages/accountPage.dart';
-import 'package:uuvpn/pages/homePage.dart';
-import 'package:uuvpn/pages/my_profile.dart';
-import 'package:uuvpn/pages/plan/plan_page.dart';
-import 'package:uuvpn/pages/proPage.dart';
-import 'package:uuvpn/pages/server_list.dart';
-import 'package:uuvpn/router/application.dart';
 import 'package:uuvpn/routes/OnceNotice.dart';
-import 'package:uuvpn/routes/proRoute.dart';
 import 'package:uuvpn/utils/l10n.dart';
 import 'package:uuvpn/utils/message_util.dart';
 import 'package:uuvpn/utils/navigator_util.dart';
-import 'package:uuvpn/widgets/ProgressView.dart';
 import 'package:uuvpn/widgets/home_widget.dart';
-import 'package:uuvpn/widgets/power_btn.dart';
-import 'package:uuvpn/widgets/sail_app_bar.dart';
 import 'package:uuvpn/utils/common_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -48,31 +35,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late PlanModel _planModel;
   bool _isLoadingData = false;
   bool _initialStatus = false;
-  bool _isfinishedLoad = false;
+  // bool _isfinishedLoad = false;
   late Timer _timer;
   bool _isFirst = false;
 
   int currentPage = 0;
-  late List<Map<String, dynamic>> _itemsList = const [
-    {
-      'name': 'Home',
-      'iconPath': 'assets/home.svg',
-      'icon': Icons.home_filled,
-      'route': HomeWidget()
-    },
-    {
-      'name': 'Nodes',
-      'iconPath': 'assets/logo2.svg',
-      'icon': Icons.rocket_launch,
-      'route': ServerListPage()
-    },
-    {
-      'name': 'Account',
-      'iconPath': 'assets/profile.svg',
-      'icon': Icons.person,
-      'route': AccountPage()
-    }
-  ];
 
   @override
   void initState() {
@@ -84,7 +51,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     getFristBool();
 
     Future.delayed(const Duration(seconds: 1), () {
-      //1秒后跳转到其他路由
+      //1秒后跳转到privacy路由
       if (_isFirst) {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (builder) => const OnceNotice()));
@@ -154,11 +121,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _planModel.fetchPlanList();
     }
 
-    if (_userModel.userEntity?.uuid != null) {
-      setState(() {
-        _isfinishedLoad = true;
-      });
-    }
+    // if (_userModel.userEntity?.uuid != null) {
+    //   setState(() {
+    //     _isfinishedLoad = true;
+    //   });
+    // }
   }
 
   sendEmail(recipient, subject, body) async {
@@ -212,13 +179,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               tooltip: 'menu',
               onPressed: () {
                 NavigatorUtil.goSettings(context);
-                // setState(() {
-
-                // });
               },
             ),
           ],
         ),
-        body: HomeWidget());
+        body: const HomeWidget());
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:fluro/fluro.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:uuvpn/pages/accountPage.dart';
@@ -47,11 +46,11 @@ class NavigatorUtil {
     showCupertinoModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height /
               1.3, // set height to half of the screen
-          child: Center(
-            child: const ServerListPage(),
+          child: const Center(
+            child: ServerListPage(),
           ),
         );
       },

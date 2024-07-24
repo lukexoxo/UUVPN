@@ -1,6 +1,7 @@
 //ignore_for_file: file_names
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uuvpn/constant/app_colors.dart';
 import 'package:uuvpn/models/app_model.dart';
 import 'package:uuvpn/models/plan_model.dart';
@@ -8,16 +9,13 @@ import 'package:uuvpn/models/user_model.dart';
 import 'package:uuvpn/models/user_subscribe_model.dart';
 import 'package:uuvpn/utils/l10n.dart';
 import 'package:uuvpn/utils/navigator_util.dart';
-import 'package:uuvpn/widgets/logo_bar.dart';
 import 'package:uuvpn/widgets/my_subscribe.dart';
 import 'package:uuvpn/widgets/plan_list.dart';
 
 import '/routes/proRoute.dart';
 import '/routes/settingsRoute.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../model/themeCollection.dart';
 
@@ -29,7 +27,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class AccountState extends State<AccountPage> {
-  void onLogoutTap(context, _userModel) {
+  void onLogoutTap(context, userModel) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -37,15 +35,15 @@ class AccountState extends State<AccountPage> {
             title: Text(context.l10n.alertsss),
             content: Column(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Align(
+                  alignment: const Alignment(0, 0),
                   child: Text(
                     context.l10n.wanttoexit,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  alignment: Alignment(0, 0),
                 ),
               ],
             ),
@@ -54,17 +52,15 @@ class AccountState extends State<AccountPage> {
                 child: Text(context.l10n.cancelss),
                 onPressed: () {
                   Navigator.pop(context);
-                  //print("取消");
                 },
               ),
               CupertinoDialogAction(
                 child: Text(
                   context.l10n.exitout,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
                 onPressed: () {
-                  //print("确定");
-                  _userModel.logout();
+                  userModel.logout();
                   NavigatorUtil.goLogin(context);
                 },
               ),
@@ -79,7 +75,7 @@ class AccountState extends State<AccountPage> {
           String? subtitle,
           VoidCallback? onTap}) =>
       ListTile(
-          onTap: onTap ?? null,
+          onTap: onTap,
           minLeadingWidth: 35,
           dense: true,
           title: Text(title,
@@ -90,16 +86,16 @@ class AccountState extends State<AccountPage> {
                   style: Theme.of(context).primaryTextTheme.labelMedium,
                 )
               : null,
-          // leading: sysicon ??
-          //     SvgPicture.asset(
-          //       icon,
-          //       // color: Theme.of(context).colorScheme.secondary,
-          //       width: 24,
-          //       cacheColorFilter: true,
-          //       color: AppColors.greenColor,
-          //       alignment: Alignment.centerRight,
-          //     ),
-          trailing: trailing ?? null);
+          leading: sysicon ??
+              SvgPicture.asset(
+                icon,
+                // color: Theme.of(context).colorScheme.secondary,
+                width: 24,
+                cacheColorFilter: true,
+                color: AppColors.greenColor,
+                alignment: Alignment.centerRight,
+              ),
+          trailing: trailing);
 
   upgradeButton(context) => GestureDetector(
       onTap: () => Navigator.of(context)
@@ -126,21 +122,15 @@ class AccountState extends State<AccountPage> {
       color: Colors.grey.withAlpha(50),
       thickness: 1);
 
-  Future<void> _launchUrl(_url) async {
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isDarkTheme = Provider.of<ThemeCollection>(context).isDarkActive;
     return Scaffold(
-      backgroundColor: isDarkTheme ? Color(0xff0B0415) : Colors.white,
+      backgroundColor: isDarkTheme ? const Color(0xff0B0415) : Colors.white,
       appBar: AppBar(
-        foregroundColor: isDarkTheme ? Colors.white : Color(0xff0B0415),
+        foregroundColor: isDarkTheme ? Colors.white : const Color(0xff0B0415),
         backgroundColor: Colors.transparent,
-        title: Text(
+        title: const Text(
           'Settings',
         ),
       ),
@@ -150,10 +140,10 @@ class AccountState extends State<AccountPage> {
 
   Widget build2(BuildContext context) {
     bool isDarkTheme = Provider.of<ThemeCollection>(context).isDarkActive;
-    AppModel _appModel = Provider.of<AppModel>(context);
+    AppModel appModel = Provider.of<AppModel>(context);
     UserModel userModel = Provider.of<UserModel>(context);
-    PlanModel _planModel = Provider.of<PlanModel>(context);
-    UserSubscribeModel _userSubscribeModel =
+    PlanModel planModel = Provider.of<PlanModel>(context);
+    UserSubscribeModel userSubscribeModel0 =
         Provider.of<UserSubscribeModel>(context);
 
     UserSubscribeModel userSubscribeModel =
@@ -169,7 +159,7 @@ class AccountState extends State<AccountPage> {
           //       left: ScreenUtil().setWidth(75),
           //       right: ScreenUtil().setWidth(75)),
           //   child: LogoBar(
-          //     isOn: _appModel.isOn,
+          //     isOn: appModel.isOn,
           //   ),
           // ),
 
@@ -184,19 +174,19 @@ class AccountState extends State<AccountPage> {
             padding: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
             child: MySubscribe(
               isLogin: userModel.isLogin,
-              isOn: _appModel.isOn,
-              userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
+              isOn: appModel.isOn,
+              userSubscribeEntity: userSubscribeModel0.userSubscribeEntity,
             ),
           ),
 
-          // Padding(
-          //   padding: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
-          //   child: PlanList(
-          //     isOn: _appModel.isOn,
-          //     userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
-          //     plans: _planModel.planEntityList,
-          //   ),
-          // ),
+          Padding(
+            padding: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
+            child: PlanList(
+              isOn: appModel.isOn,
+              userSubscribeEntity: userSubscribeModel.userSubscribeEntity,
+              plans: planModel.planEntityList,
+            ),
+          ),
           userModel.isLogin
               ? Padding(
                   padding: EdgeInsets.only(left: ScreenUtil().setWidth(15)))
@@ -232,15 +222,15 @@ class AccountState extends State<AccountPage> {
                       //Navigator.of(context).push(MaterialPageRoute(
                       // builder: (builder) => const SettingsRoute()))
                       NavigatorUtil.goLogin(context)),
-          // divider,
-          // customListTile(context, 'Base Plan', 'assets/active.svg',
-          //     trailing: upgradeButton(context)),
-          // // divider,
-          // customListTile(
-          //   context,
-          //   'Restore',
-          //   'assets/history.svg',
-          // ),
+          divider,
+          customListTile(context, 'Base Plan', 'assets/active.svg',
+              trailing: upgradeButton(context)),
+          divider,
+          customListTile(
+            context,
+            'Restore',
+            'assets/history.svg',
+          ),
           divider,
           customListTile(context, 'Settings', 'assets/settings.svg',
               trailing: IconButton(
@@ -249,45 +239,47 @@ class AccountState extends State<AccountPage> {
                   icon: Icon(Icons.arrow_forward_ios,
                       size: 20,
                       color: isDarkTheme
-                          ? Color.fromARGB(255, 148, 145, 145)
-                          : Color.fromARGB(255, 190, 187, 187))),
+                          ? const Color.fromARGB(255, 148, 145, 145)
+                          : const Color.fromARGB(255, 190, 187, 187))),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (builder) => const SettingsRoute()))),
           divider,
           Text("App Version: 2.0.0",
               style: Theme.of(context).primaryTextTheme.labelMedium),
-          /*userModel.isLogin
-              ? GestureDetector(
-                  onTap: () => {
-                    // NavigatorUtil.goWebView(context, "Delete my account",
-                    // "https://uuvpn.co/help/Help.php?userid=${userModel.userEntity?.email}")
 
-                    NavigatorUtil.goWebView(context, "Delete My Account",
-                        "https://go.crisp.chat/chat/embed/?website_id=3ed83170-f288-4c23-acd4-30c1e557948b&user_email=${userModel.userEntity?.email}")
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: kToolbarHeight - 10,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 32.0, vertical: 8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(65),
-                        color: isDarkTheme
-                            ? Color.fromARGB(255, 220, 66, 66)
-                            : AppColors.greenColor),
-                    child: Text(
-                      'Delete My Account',
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .headline6!
-                          .copyWith(
-                              color: isDarkTheme
-                                  ? AppColors.whiteColor
-                                  : Color.fromARGB(255, 9, 30, 4)),
-                    ),
-                  ),
-                )
-              : SizedBox(),*/
+          // 删除账户按钮
+          // userModel.isLogin
+          //     ? GestureDetector(
+          //         onTap: () => {
+          //           // NavigatorUtil.goWebView(context, "Delete my account",
+          //           // "https://uuvpn.co/help/Help.php?userid=${userModel.userEntity?.email}")
+
+          //           NavigatorUtil.goWebView(context, "Delete My Account",
+          //               "https://go.crisp.chat/chat/embed/?website_id=3ed83170-f288-4c23-acd4-30c1e557948b&user_email=${userModel.userEntity?.email}")
+          //         },
+          //         child: Container(
+          //           alignment: Alignment.center,
+          //           height: kToolbarHeight - 10,
+          //           margin: const EdgeInsets.symmetric(
+          //               horizontal: 32.0, vertical: 8),
+          //           decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(65),
+          //               color: isDarkTheme
+          //                   ? Color.fromARGB(255, 220, 66, 66)
+          //                   : AppColors.greenColor),
+          //           child: Text(
+          //             'Delete My Account',
+          //             style: Theme.of(context)
+          //                 .primaryTextTheme
+          //                 .headline6!
+          //                 .copyWith(
+          //                     color: isDarkTheme
+          //                         ? AppColors.whiteColor
+          //                         : Color.fromARGB(255, 9, 30, 4)),
+          //           ),
+          //         ),
+          //       )
+          //     : SizedBox(),
         ],
       ),
     );

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as services;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:uuvpn/constant/app_colors.dart';
 import 'package:uuvpn/constant/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:uuvpn/models/app_model.dart';

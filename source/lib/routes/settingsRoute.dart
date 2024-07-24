@@ -1,4 +1,5 @@
 //ignore_for_file: file_names
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uuvpn/constant/app_colors.dart';
 import 'package:uuvpn/models/user_model.dart';
 import 'package:uuvpn/routes/proRoute.dart';
@@ -33,10 +34,10 @@ class _SettingsRouteState extends State<SettingsRoute> {
           String? subtitle,
           VoidCallback? onTap}) =>
       ListTile(
-          onTap: onTap ?? null,
+          onTap: onTap,
           minLeadingWidth: 35,
           dense: true,
-          contentPadding: EdgeInsets.only(left: 24),
+          contentPadding: const EdgeInsets.only(left: 24),
           title: Text(title,
               style: Theme.of(context).primaryTextTheme.labelMedium),
           subtitle: subtitle != null
@@ -45,16 +46,16 @@ class _SettingsRouteState extends State<SettingsRoute> {
                   style: Theme.of(context).primaryTextTheme.labelMedium,
                 )
               : null,
-          // leading: sysicon ??
-          //     SvgPicture.asset(
-          //       icon,
-          //       // color: Theme.of(context).colorScheme.secondary,
-          //       width: 24,
-          //       cacheColorFilter: true,
-          //       color: AppColors.greenColor,
-          //       alignment: Alignment.centerRight,
-          //     ),
-          trailing: trailing ?? null);
+          leading: sysicon ??
+              SvgPicture.asset(
+                icon,
+                // color: Theme.of(context).colorScheme.secondary,
+                width: 24,
+                cacheColorFilter: true,
+                color: AppColors.greenColor,
+                alignment: Alignment.centerRight,
+              ),
+          trailing: trailing);
 
   upgradeButton(context) => GestureDetector(
       onTap: () => Navigator.of(context)
@@ -81,9 +82,9 @@ class _SettingsRouteState extends State<SettingsRoute> {
       color: Colors.grey.withAlpha(50),
       thickness: 1);
 
-  Future<void> _launchUrl(_url) async {
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(url) async {
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 
@@ -91,7 +92,6 @@ class _SettingsRouteState extends State<SettingsRoute> {
           Function(bool)? onChanged) =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         divider,
-        // const Divider(color: Colors.grey, thickness: 1),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
           child: Text(title,
@@ -106,7 +106,7 @@ class _SettingsRouteState extends State<SettingsRoute> {
                 Provider.of<ThemeCollection>(context).isDarkActive
                     ? AppColors.whiteColor.withAlpha(90)
                     : const Color(0xffD7D6D9),
-            contentPadding: EdgeInsets.only(left: 24),
+            contentPadding: const EdgeInsets.only(left: 24),
             title: Text(
               description,
               style: Theme.of(context).primaryTextTheme.labelMedium,
@@ -121,10 +121,10 @@ class _SettingsRouteState extends State<SettingsRoute> {
     bool isDarkTheme = Provider.of<ThemeCollection>(context).isDarkActive;
     var themeData = Provider.of<ThemeCollection>(context);
     return Scaffold(
-      backgroundColor: isDarkTheme ? Color(0xff0B0415) : Colors.white,
+      backgroundColor: isDarkTheme ? const Color(0xff0B0415) : Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        foregroundColor: isDarkTheme ? Colors.white : Color(0xff0B0415),
+        foregroundColor: isDarkTheme ? Colors.white : const Color(0xff0B0415),
         title: const Text('Settings'),
       ),
       body: ListView(
@@ -156,15 +156,14 @@ class _SettingsRouteState extends State<SettingsRoute> {
                   groupValue: connectionValue,
                   onChanged: setConnectionValue),
             );
-          }).toList()),
+          }).toList()),*/
           listTileSet(
               'Kill Switch',
               'Block internet when connecting or changing servers',
               killSwitch,
               (value) => setState(() => killSwitch = value)),
-              
           listTileSet('Connection', 'Connect when  VPN starts', proVpn,
-              (value) => setState(() => proVpn = value)),*/
+              (value) => setState(() => proVpn = value)),
           listTileSet(
               'Notification',
               'Show notification when VPN is not connected.',
@@ -182,9 +181,9 @@ class _SettingsRouteState extends State<SettingsRoute> {
                   icon: Icon(Icons.arrow_forward_ios,
                       size: 20,
                       color: isDarkTheme
-                          ? Color.fromARGB(255, 148, 145, 145)
-                          : Color.fromARGB(255, 190, 187, 187))),
-              sysicon: Icon(Icons.rate_review,
+                          ? const Color.fromARGB(255, 148, 145, 145)
+                          : const Color.fromARGB(255, 190, 187, 187))),
+              sysicon: const Icon(Icons.rate_review,
                   size: 30, color: AppColors.greenColor),
               onTap: () => _launchUrl(Uri.parse(
                   "https://apps.apple.com/us/app/uuvpn-2023/id6449599228"))),
@@ -196,15 +195,15 @@ class _SettingsRouteState extends State<SettingsRoute> {
                   icon: Icon(Icons.arrow_forward_ios,
                       size: 20,
                       color: isDarkTheme
-                          ? Color.fromARGB(255, 148, 145, 145)
-                          : Color.fromARGB(255, 190, 187, 187))),
-              sysicon: Icon(Icons.private_connectivity,
+                          ? const Color.fromARGB(255, 148, 145, 145)
+                          : const Color.fromARGB(255, 190, 187, 187))),
+              sysicon: const Icon(Icons.private_connectivity,
                   size: 30, color: AppColors.greenColor),
               onTap: () => NavigatorUtil.goWebView(context, "Privacy policy",
                   "https://uuvpn.co/privacy-policy/")),
           divider,
           customListTile(context, 'Terms&Conditions', '',
-              sysicon: Icon(Icons.format_align_center,
+              sysicon: const Icon(Icons.format_align_center,
                   size: 30, color: AppColors.greenColor),
               trailing: IconButton(
                   color: Theme.of(context).colorScheme.secondary,
@@ -212,14 +211,15 @@ class _SettingsRouteState extends State<SettingsRoute> {
                   icon: Icon(Icons.arrow_forward_ios,
                       size: 20,
                       color: isDarkTheme
-                          ? Color.fromARGB(255, 148, 145, 145)
-                          : Color.fromARGB(255, 190, 187, 187))), onTap: () {
+                          ? const Color.fromARGB(255, 148, 145, 145)
+                          : const Color.fromARGB(255, 190, 187, 187))),
+              onTap: () {
             NavigatorUtil.goWebView(
                 context, "Terms&Conditions", "https://uuvpn.co/terms/");
           }),
           divider,
           customListTile(context, 'Online Help', '',
-              sysicon: Icon(Icons.format_align_center,
+              sysicon: const Icon(Icons.format_align_center,
                   size: 30, color: AppColors.greenColor),
               trailing: IconButton(
                   color: Theme.of(context).colorScheme.secondary,
@@ -227,8 +227,9 @@ class _SettingsRouteState extends State<SettingsRoute> {
                   icon: Icon(Icons.arrow_forward_ios,
                       size: 20,
                       color: isDarkTheme
-                          ? Color.fromARGB(255, 148, 145, 145)
-                          : Color.fromARGB(255, 190, 187, 187))), onTap: () {
+                          ? const Color.fromARGB(255, 148, 145, 145)
+                          : const Color.fromARGB(255, 190, 187, 187))),
+              onTap: () {
             // NavigatorUtil.goWebView(
             //     context, "Terms&Conditions", "https://uuvpn.co/terms/");
             NavigatorUtil.goWebView(context, "Online Help",
